@@ -1,10 +1,8 @@
 import sys
-
+from shell.core.shell_loop import run_interactive_loop
 
 def main():
-    # TODO: Uncomment the code below to pass the first stage
-    # sys.stdout.write("$ ")
-    pass
+    run_interactive_loop()
 
 
 if __name__ == "__main__":
