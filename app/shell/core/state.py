@@ -1,5 +1,6 @@
 #app/shell/core/state.py
 
+import os
 from app.shell.utils.constant import (
     DEFAULT_PROMPT,
 )
@@ -7,7 +8,10 @@ from app.shell.utils.constant import (
 class ShellState:
     def __init__(self):
         self.prompt=DEFAULT_PROMPT
-        
+        self.running=True
+        self.env={}
+        self.cwd=os.getcwd()
+        self.exit_code=0
         
         
 
