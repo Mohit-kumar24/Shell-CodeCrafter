@@ -1,6 +1,6 @@
 #app/shell/core/state.py
 
-from app.shell.utils.constant import (
+from shell.utils.constant import (
     DEFAULT_PROMPT,
 )
 
