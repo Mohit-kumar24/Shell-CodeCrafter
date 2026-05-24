@@ -1,5 +1,5 @@
 import sys
-from shell.core.state import shell_state
+from app.shell.core.state import shell_state
 
 def run_interactive_loop():
     """The core REPL (Read-Eval-Print Loop) driving your python shell."""
