@@ -1,3 +1,5 @@
+#app/shell/core/shell_loop.py
+
 import sys
 from app.shell.core.state import shell_state
 from app.shell.executor.executor import process_command
