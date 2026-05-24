@@ -13,5 +13,6 @@ def run_interactive_loop():
         
         except Exception as e :
             sys.stderr.write(f"Shell execution error: {e}\n")
-    
+
+        break   # Single Iteration
     return
