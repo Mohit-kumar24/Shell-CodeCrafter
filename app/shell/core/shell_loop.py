@@ -15,6 +15,13 @@ def run_interactive_loop():
             # Reading User Input , added newline with it
             raw_input = sys.stdin.readline()
             
+            # Handle Ctrl+D (EOF) as readline gives ""
+            # If readline returns an empty string, the input stream is closed
+            if not raw_input:
+                sys.stdout.write("\n")
+                shell_state.running = False
+                break
+            
             # Passing it to executor
             process_command(raw_input)
             
@@ -22,14 +29,7 @@ def run_interactive_loop():
             # Handling Ctrl + C so it does not kill python Process
             sys.stdout.write("\n")
             sys.stdout.flush()  # To forcing input to appear quickly
-            
-        
-        except EOFError:
-            # Handle Ctrl+D (EOF)
-            sys.stdout.write("\n")
-            shell_state.running = False
-            
-            
+                        
         except Exception as e :
             sys.stderr.write(f"Shell execution error: {e}\n")
 
