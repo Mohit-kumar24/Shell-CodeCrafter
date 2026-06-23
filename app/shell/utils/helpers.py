@@ -12,6 +12,8 @@ def find_in_path(name):
     Search each directory in $PATH for an executable named `name`.
     Returns the full path string on success, None if not found.
     Time: O(d) where d = number of dirs in PATH.
+    
+    * os.pathsep = Delmiiter (: or ;)
     """
     path_env = os.environ.get('PATH', '')
     for directory in path_env.split(os.pathsep):
