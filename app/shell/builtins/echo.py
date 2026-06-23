@@ -7,6 +7,7 @@ def builtin_echo(args, shell_state) -> int:
     # HOOK Stage 2: handle -n flag (suppress newline) here
     # HOOK Stage 5: $VAR expansion arrives pre-expanded via lexer/parser
     try:
+        # Deafult no argument
         sys.stdout.write(' '.join(args) + '\n')
         sys.stdout.flush()
         shell_state.exit_code = 0
