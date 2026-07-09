@@ -121,6 +121,16 @@ def tokenize(input_string):
             tokens.append((REDIRECT_IN, '<'))
             i += 1
             continue
+        
+        # --- 1> or 1>>  ---
+        if c == '1' and i + 1 < n and s[i + 1] == '>':
+            if i + 2 < n and s[i + 2] == '>':
+                tokens.append((REDIRECT_APPEND, '>>'))  # Normalizing token value to >>
+                i += 3
+            else:
+                tokens.append((REDIRECT_OUT, '>'))      # Normalizing token value to >
+                i += 2
+            continue
 
         # --- 2> or 2>>  ---
         # Only treat as redirect when '2' is the very start of a new token
