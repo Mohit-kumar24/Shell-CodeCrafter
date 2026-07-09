@@ -10,7 +10,7 @@ _WORD_TERMINATORS = frozenset(' \t\n|><')
 
 def _read_word(s, start, n):
     """
-    Consume one WORD from s[start:], handling quotes and backslash escapes.
+    Consume one WORD from s[start:], handling Single / Double quotes and backslash escapes.
     Returns (word_string, chars_consumed).
 
     HOOK (Stage 2): single-quote and double-quote logic lives here.
@@ -18,38 +18,57 @@ def _read_word(s, start, n):
     """
     word = []
     i = start
+    quote_state = None  # Tracks if we are inside quotes: None, "'", or '"'
 
-    while i < n and s[i] not in _WORD_TERMINATORS:
+    while i < n:
         ch = s[i]
 
-        # --- single quote: preserve every character literally ---
-        # HOOK Stage 2: this is intentionally minimal; no expansions inside ''
-        if ch == "'":
+        # --- Check if we need to exit or change quote states first ---
+        if quote_state == "'":
+            if ch == "'":
+                quote_state = None
+                i += 1  # skip closing '
+                continue
+            word.append(ch)
             i += 1
-            while i < n and s[i] != "'":
-                word.append(s[i])
+            continue
+
+        elif quote_state == '"':
+            if ch == '"':
+                quote_state = None
+                i += 1  # skip closing "
+                continue
+            
+            # Add $VAR expansion inside here
+            # (Stage 5 hook placeholder: check for '$' here if needed later)
+            
+            if ch == '\\' and i + 1 < n and s[i + 1] in ('"', '\\', '$', '\n'):
+                word.append(s[i + 1])
+                i += 2
+                continue
+            else:
+                word.append(ch)
                 i += 1
-            if i < n:
-                i += 1          # skip closing '
+                continue
+
+        # --- Handling outside of quotes ---
+        if ch in _WORD_TERMINATORS:
+            break
+
+        # --- single quote: preserve every character literally ---
+        if ch == "'":
+            quote_state = "'"
+            i += 1
             continue
 
         # --- double quote: allow backslash escape, no $VAR yet ---
-        # HOOK Stage 5: add $VAR expansion inside here
         if ch == '"':
+            quote_state = '"'
             i += 1
-            while i < n and s[i] != '"':
-                if s[i] == '\\' and i + 1 < n and s[i + 1] in ('"', '\\', '$', '\n'):
-                    word.append(s[i + 1])
-                    i += 2
-                else:
-                    word.append(s[i])
-                    i += 1
-            if i < n:
-                i += 1          # skip closing "
             continue
 
         # --- backslash outside quotes ---
-        # HOOK Stage 2: extend escape table here (\n, \t, etc.)
+        # extend escape table here (\n, \t, etc.)
         if ch == '\\' and i + 1 < n:
             word.append(s[i + 1])
             i += 2

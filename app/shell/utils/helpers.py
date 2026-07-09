@@ -10,7 +10,7 @@ def is_builtin(name, builtin_commands):
 def find_in_path(name):
     """
     Search each directory in $PATH for an executable named `name`.
-    Returns the full path string on success, None if not found.
+    Returns the full path string on success and if there is file access, None if not found.
     Time: O(d) where d = number of dirs in PATH.
     
     * os.pathsep = Delmiiter (: or ;)

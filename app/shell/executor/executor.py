@@ -1,10 +1,10 @@
 # app/shell/executor/executor.py
 import subprocess
 import sys
-from app.shell.core.state        import shell_state
-from app.shell.parser.lexer      import tokenize
+from app.shell.core.state import shell_state
+from app.shell.parser.lexer import tokenize
 from app.shell.parser.command_parser import parse
-from app.shell.builtins          import BUILTIN_COMMANDS
+from app.shell.builtins import BUILTIN_COMMANDS
 
 
 def process_command(raw_command):
@@ -14,6 +14,7 @@ def process_command(raw_command):
     HOOK Stage 4: after parse(), check cmd_dict["redirects"] and
                   cmd_dict["pipeline"] before dispatching.
     """
+    # Removing '\n' inserted due to readline
     command = raw_command.strip()
     if not command:
         return

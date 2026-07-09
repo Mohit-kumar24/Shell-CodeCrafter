@@ -12,7 +12,7 @@ def run_interactive_loop():
             sys.stdout.write(prompt_string)
             sys.stdout.flush()  # To forcing input to appear quickly
             
-            # Reading User Input , added newline with it
+            # Reading User Input , added newline with it - Handle Empty string
             raw_input = sys.stdin.readline()
             
             # Handle Ctrl+D (EOF) as readline gives ""

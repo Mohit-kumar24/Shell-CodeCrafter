@@ -18,6 +18,7 @@ def builtin_type(args, shell_state) -> int:
         return shell_state.exit_code
 
     # Lazy import avoids circular import at module load time:
+    # incomplete module in sys cache causing error
     # builtins/__init__.py imports type_cmd, type_cmd imports BUILTIN_COMMANDS
     # only when builtin_type() is *called* (by which time __init__ is fully loaded).
     from app.shell.builtins import BUILTIN_COMMANDS
