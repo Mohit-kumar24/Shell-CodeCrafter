@@ -10,7 +10,6 @@ def builtin_pwd(args, shell_state) -> int:
         sys.stdout.flush()
         shell_state.exit_code = 0
     except Exception as e:
-        # If sys.stdout is closed or not working properly
         sys.stderr.write(f"pwd: {e}\n")
         sys.stderr.flush()
         shell_state.exit_code = 1

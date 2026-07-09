@@ -10,20 +10,19 @@ def parse(tokens):
         {
             "command":   str,   # argv[0]
             "args":      list,  # argv[1:]
-            "redirects": list,  # HOOK Stage 4: [(REDIRECT_TYPE, target), ...]
-            "pipeline":  list,  # HOOK Stage 4: [cmd_dict, ...] for | chains
+            "redirects": list,  # [(REDIRECT_TYPE, target), ...]
+            "pipeline":  list,  [cmd_dict, ...] for | chains
         }
     Returns None for empty/whitespace-only input.
 
-    Stage 1-3: only WORD tokens are acted on.
     Stage 4:   un-comment redirect + pipeline branches below.
     """
     _REDIRECT_TYPES = {REDIRECT_OUT, REDIRECT_APPEND, REDIRECT_IN, REDIRECT_ERR}
 
     command   = None
     args      = []
-    redirects = []   # HOOK Stage 4
-    pipeline  = []   # HOOK Stage 4
+    redirects = []  
+    pipeline  = []   
 
     i = 0
     while i < len(tokens):
@@ -40,16 +39,16 @@ def parse(tokens):
             i += 1
             continue
 
-        # HOOK Stage 4 — redirect: consume (redirect_token, target_word)
+        # redirect: consume (redirect_token, target_word)
         if tok_type in _REDIRECT_TYPES:
             if i + 1 < len(tokens) and tokens[i + 1][0] == WORD:
-                redirects.append((tok_type, tokens[i + 1][1]))
+                redirects.append((tok_type, tok_val, tokens[i + 1][1]))
                 i += 2
             else:
                 i += 1
             continue
 
-        # HOOK Stage 4 — pipeline: split here into sub-command dicts
+        # pipeline: split here into sub-command dicts
         if tok_type == PIPE:
             # pipeline.append({"command": command, "args": args, "redirects": redirects})
             # command, args, redirects = None, [], []

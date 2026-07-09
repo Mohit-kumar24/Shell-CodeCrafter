@@ -172,3 +172,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# My Custom Files
+app/codebase.txt
+app/project_dump.txt
+tp.txt

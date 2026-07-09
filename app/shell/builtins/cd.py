@@ -34,7 +34,6 @@ def builtin_cd(args, shell_state) -> int:
         shell_state.cwd = os.getcwd()   # keep ShellState in sync
         shell_state.exit_code = 0
     except FileNotFoundError:
-        # label = args[0] if args else '~'    # Handle Empty space
         label = args[0]    # Handle Empty space
         sys.stderr.write(f"cd: {label}: No such file or directory\n")
         sys.stderr.flush()

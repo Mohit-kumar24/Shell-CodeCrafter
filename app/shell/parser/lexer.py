@@ -100,13 +100,13 @@ def tokenize(input_string):
             i += 1
             continue
 
-        # --- pipe  HOOK Stage 4 ---
+        # --- pipe  ---
         if c == '|':
             tokens.append((PIPE, '|'))
             i += 1
             continue
 
-        # --- >> or >  HOOK Stage 4 ---
+        # --- >> or > ---
         if c == '>':
             if i + 1 < n and s[i + 1] == '>':
                 tokens.append((REDIRECT_APPEND, '>>'))
@@ -116,13 +116,13 @@ def tokenize(input_string):
                 i += 1
             continue
 
-        # --- <  HOOK Stage 4 ---
+        # --- <   ---
         if c == '<':
             tokens.append((REDIRECT_IN, '<'))
             i += 1
             continue
 
-        # --- 2> or 2>>  HOOK Stage 4 ---
+        # --- 2> or 2>>  ---
         # Only treat as redirect when '2' is the very start of a new token
         if c == '2' and i + 1 < n and s[i + 1] == '>':
             if i + 2 < n and s[i + 2] == '>':
